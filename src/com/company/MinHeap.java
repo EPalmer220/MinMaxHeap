@@ -59,7 +59,7 @@ public class MinHeap {
         }
     }
 
-    private int getMin() {
+    public int getMin() {
         if(minHeap.length > 1)
             return minHeap[1];
         else

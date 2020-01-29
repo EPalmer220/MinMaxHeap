@@ -59,7 +59,7 @@ public class MaxHeap {
         }
     }
 
-    private int getMax() {
+    public int getMax() {
         if(maxHeap.length > 1)
             return maxHeap[1];
         else
