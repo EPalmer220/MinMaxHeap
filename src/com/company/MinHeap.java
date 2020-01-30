@@ -113,10 +113,10 @@ public class MinHeap {
             }
         }
 
-        int replacedVal = minHeap[counter];
-        int currentIndex = counter;
-
         if(wasReplaced){
+            int replacedVal = minHeap[counter];
+            int currentIndex = counter;
+
             while((hasLeftChild(currentIndex) || hasRightChild(currentIndex))) {
                 if(getLeftChild(currentIndex) < replacedVal || getRightChild(currentIndex) < replacedVal){
                     currentIndex = sink(currentIndex);
@@ -127,8 +127,9 @@ public class MinHeap {
 
     public int extractMin(){
         if(minHeap.length > 1){
+            int extracted = minHeap[1];
             remove(minHeap[1]);
-            return(minHeap[1]);
+            return extracted;
         }
         return -1;
     }
@@ -171,13 +172,20 @@ public class MinHeap {
         return 0;
     }
 
-    public int[] replaceArray(int[] originalArray, int itemToBeRemoved){
-        int[] newArray = new int[originalArray.length];
+    private int[] replaceArray(int[] originalArray, int itemToBeRemoved){
+        int[] newArray = new int[size];
+        int newLength = size;
+        boolean isSearching = true;
 
-        for(int i = 0; i < size; i++)
-            if(itemToBeRemoved != originalArray[i])
+        for(int i = 0; i < newLength; i++){
+            if(isSearching && itemToBeRemoved != originalArray[i]){
                 newArray[i] = originalArray[i];
-
+            }
+            else {
+                isSearching = false;
+                newArray[i] = originalArray[i];
+            }
+        }
         return newArray;
     }
 }

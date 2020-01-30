@@ -52,6 +52,8 @@ public class MaxHeap {
         return maxHeap[getRightChildIndex(parentIndex)];
     }
 
+    private int getNode(int index) { return maxHeap[index]; }
+
     private void capacityCheck() {
         if (size == capacity) {
             maxHeap = Arrays.copyOf(maxHeap, capacity * 2);
@@ -113,10 +115,10 @@ public class MaxHeap {
             }
         }
 
-        int replacedVal = maxHeap[counter];
-        int currentIndex = counter;
-
         if(wasReplaced){
+            int replacedVal = maxHeap[counter];
+            int currentIndex = counter;
+
             while((hasLeftChild(currentIndex) || hasRightChild(currentIndex))) {
                 if(getLeftChild(currentIndex) > replacedVal || getRightChild(currentIndex) > replacedVal){
                     currentIndex = sink(currentIndex);
@@ -127,12 +129,12 @@ public class MaxHeap {
 
     public int extractMax(){
         if(maxHeap.length > 1){
+            int extracted = maxHeap[1];
             remove(maxHeap[1]);
-            return(maxHeap[1]);
+            return extracted;
         }
         return -1;
     }
-
 
     private int sink(int index){
         int maxChildIndex = 0;
@@ -168,16 +170,23 @@ public class MaxHeap {
             return newIndex;
         }
 
-        return 0;
+        return -1;
     }
 
-    public int[] replaceArray(int[] originalArray, int itemToBeRemoved){
-        int[] newArray = new int[originalArray.length];
+    private int[] replaceArray(int[] originalArray, int itemToBeRemoved){
+        int[] newArray = new int[size];
+        int newLength = size;
+        boolean isSearching = true;
 
-        for(int i = 0; i < size; i++)
-            if(itemToBeRemoved != originalArray[i])
+        for(int i = 0; i < newLength; i++){
+            if(isSearching && itemToBeRemoved != originalArray[i]){
                 newArray[i] = originalArray[i];
-
+            }
+            else {
+                isSearching = false;
+                newArray[i] = originalArray[i];
+            }
+        }
             return newArray;
     }
 }
